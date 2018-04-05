@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72bd2ddc-519c-49d4-abe7-0e2e4b738148" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Algae.class" afterPath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Algae.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main$3.class" afterPath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main.class" afterPath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main$3.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assignment5/Algae.java" afterPath="$PROJECT_DIR$/src/assignment5/Algae.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assignment5/Main.java" afterPath="$PROJECT_DIR$/src/assignment5/Main.java" />
     </list>
@@ -22,14 +20,19 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/assignment5/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-135">
-              <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+            <state relative-caret-position="-176">
+              <caret line="417" column="79" lean-forward="false" selection-start-line="417" selection-start-column="79" selection-end-line="417" selection-end-column="79" />
               <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1649#1665#0" expanded="true" />
+                <element signature="e#4103#4111#0" expanded="true" />
                 <element signature="method#drawSquare#0;class#Main#0" expanded="false" />
                 <element signature="method#drawCircle#0;class#Main#0" expanded="false" />
+                <element signature="method#drawTriangle#0;class#Main#0" expanded="false" />
                 <element signature="method#drawDiamond#0;class#Main#0" expanded="false" />
-                <element signature="e#14832#14833#0" expanded="true" />
-                <element signature="e#14913#14914#0" expanded="true" />
+                <element signature="method#drawStar#0;class#Main#0" expanded="false" />
+                <element signature="e#16475#16476#0" expanded="true" />
+                <element signature="e#16556#16557#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -38,8 +41,8 @@
       <file leaf-file-name="Algae.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment5/Algae.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="20" column="64" lean-forward="false" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -48,12 +51,22 @@
       <file leaf-file-name="CritterGiven.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment5/CritterGiven.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-195">
+            <state relative-caret-position="-75">
               <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
               <folding>
                 <element signature="e#3011#3012#0" expanded="true" />
                 <element signature="e#3027#3028#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Critter3.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assignment5/Critter3.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="395">
+              <caret line="53" column="96" lean-forward="false" selection-start-line="53" selection-start-column="96" selection-end-line="53" selection-end-column="96" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -71,7 +84,7 @@
       <file leaf-file-name="Craig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment5/Craig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
+            <state relative-caret-position="275">
               <caret line="70" column="5" lean-forward="false" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
               <folding />
             </state>
@@ -91,8 +104,8 @@
       <file leaf-file-name="Critter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment5/Critter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="257" column="25" lean-forward="false" selection-start-line="257" selection-start-column="25" selection-end-line="257" selection-end-column="25" />
+            <state relative-caret-position="106">
+              <caret line="253" column="59" lean-forward="true" selection-start-line="253" selection-start-column="12" selection-end-line="253" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;class#Critter#0" expanded="false" />
@@ -147,6 +160,9 @@
       <find>step</find>
       <find>Button</find>
       <find>drawCritter</find>
+      <find>getCritterClasses</find>
+      <find>getCr</find>
+      <find>stats</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -358,12 +374,12 @@
       <option name="presentableId" value="Default" />
       <updated>1522861060149</updated>
       <workItem from="1522861063424" duration="29694000" />
-      <workItem from="1522940233131" duration="9406000" />
+      <workItem from="1522940233131" duration="13786000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39100000" />
+    <option name="totallyTimeSpent" value="43480000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="1028" extended-state="0" />
@@ -413,7 +429,7 @@
           <properties />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="11" />
+      <option name="time" value="20" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -432,11 +448,16 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1649#1665#0" expanded="true" />
+            <element signature="e#4103#4111#0" expanded="true" />
             <element signature="method#drawSquare#0;class#Main#0" expanded="false" />
             <element signature="method#drawCircle#0;class#Main#0" expanded="false" />
+            <element signature="method#drawTriangle#0;class#Main#0" expanded="false" />
             <element signature="method#drawDiamond#0;class#Main#0" expanded="false" />
-            <element signature="e#14832#14833#0" expanded="true" />
-            <element signature="e#14913#14914#0" expanded="true" />
+            <element signature="method#drawStar#0;class#Main#0" expanded="false" />
+            <element signature="e#16475#16476#0" expanded="true" />
+            <element signature="e#16556#16557#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -542,14 +563,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment5/Critter3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="53" column="96" lean-forward="false" selection-start-line="53" selection-start-column="96" selection-end-line="53" selection-end-column="96" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment5/Critter1.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
@@ -584,8 +597,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment5/Critter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="257" column="25" lean-forward="false" selection-start-line="257" selection-start-column="25" selection-end-line="257" selection-end-column="25" />
+        <state relative-caret-position="106">
+          <caret line="253" column="59" lean-forward="true" selection-start-line="253" selection-start-column="12" selection-end-line="253" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;class#Critter#0" expanded="false" />
@@ -629,15 +642,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment5/Craig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
+        <state relative-caret-position="275">
           <caret line="70" column="5" lean-forward="false" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment5/Algae.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="20" column="64" lean-forward="false" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment5/Critter3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="53" column="96" lean-forward="false" selection-start-line="53" selection-start-column="96" selection-end-line="53" selection-end-column="96" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment5/CritterGiven.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-195">
+        <state relative-caret-position="-75">
           <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
           <folding>
             <element signature="e#3011#3012#0" expanded="true" />
@@ -646,24 +675,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment5/Algae.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment5/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+        <state relative-caret-position="-176">
+          <caret line="417" column="79" lean-forward="false" selection-start-line="417" selection-start-column="79" selection-end-line="417" selection-end-column="79" />
           <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1649#1665#0" expanded="true" />
+            <element signature="e#4103#4111#0" expanded="true" />
             <element signature="method#drawSquare#0;class#Main#0" expanded="false" />
             <element signature="method#drawCircle#0;class#Main#0" expanded="false" />
+            <element signature="method#drawTriangle#0;class#Main#0" expanded="false" />
             <element signature="method#drawDiamond#0;class#Main#0" expanded="false" />
-            <element signature="e#14832#14833#0" expanded="true" />
-            <element signature="e#14913#14914#0" expanded="true" />
+            <element signature="method#drawStar#0;class#Main#0" expanded="false" />
+            <element signature="e#16475#16476#0" expanded="true" />
+            <element signature="e#16556#16557#0" expanded="true" />
           </folding>
         </state>
       </provider>

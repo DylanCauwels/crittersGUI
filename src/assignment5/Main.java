@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.ArrayList;
+import java.io.*;
+import java.net.*;
 
 public class Main extends Application implements EventHandler<ActionEvent>{
 
@@ -47,7 +49,62 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		launch(args);
 	}
 
+	public ArrayList<Class<Critter>> getCritterClasses(Package pkg){
+		ArrayList<Class<Critter>> classes = new ArrayList<Class<Critter>>();
+		String packagename = pkg.getName();
+		URL resource = ClassLoader.getSystemClassLoader().getResource(packagename);
+		String path = resource.getFile();
+		File directory;
+		try {
+			directory = new File(resource.toURI());
+		} catch (Exception e) {
+			return null;
+		}
+		if (directory.exists()) {
+			String[] files = directory.list();
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].endsWith(".class")) {
+					// removes the .class extension
+					String className = packagename + '.' + files[i].substring(0, files[i].length() - 6);
+					try {
+						Class classObj = Class.forName(className);
+						try{
+							Object obj = classObj.newInstance();
+							if (obj instanceof Critter){
+								classes.add(classObj);
+							}
+						}catch(Exception e){
+							continue;
+						}
+					}
+					catch (ClassNotFoundException e) {
+						throw new RuntimeException("ClassNotFoundException loading " + className);
+					}
+				}
+			}
+		}
+		return classes;
+	}
 
+	public void addCritterOptionsMenu(ChoiceBox<String> box){
+		ArrayList<Class<Critter>> critters = getCritterClasses(this.getClass().getPackage());
+		for (Class<Critter> c:critters){
+			box.getItems().add(c.getSimpleName());
+		}
+		if(box.getItems().size()>0){
+			box.setValue(box.getItems().get(0));
+		}
+	}
+
+	public void addCritters(String critter_name, int num){
+		for(int i = 0; i<num; i++){
+			try{
+				Critter.makeCritter(critter_name);
+			}catch(InvalidCritterException e){
+				return;
+			}
+		}
+	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
@@ -75,13 +132,16 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		//CritterQuantity Pane Title
 		Label quantityStepTitle = new Label("Critter Population Settings");
 
+		//CritterQuantity ChoiceBox
+		ChoiceBox<String> critterTypes = new ChoiceBox<String>();
+		addCritterOptionsMenu(critterTypes);
 
 		//CritterQuantity 'Add' Button
 		Button sizeStep = new Button();
 		sizeStep.setText("Add");
 		sizeStep.setOnAction(event -> {
             //TODO add specified Critters to World
-
+			addCritters(critterTypes.getValue(),quantityInput);
         });
 		Label currentQuantityInput = new Label("Current Quantity: " + quantityInput + " Critters");
 
@@ -109,15 +169,6 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 			}
 		});
 
-		//CritterQuantity ChoiceBox
-		ChoiceBox<String> critterTypes = new ChoiceBox<String>();
-		critterTypes.getItems().add("Craig");
-		critterTypes.getItems().add("Tragic Critter");
-		critterTypes.getItems().add("Algae");
-		critterTypes.getItems().add("Algaephobic Critter");
-		//TODO implement automatic scanner that detects Critter classes in the assignment package
-		critterTypes.setValue("Craig");
-
 		//Quantity Pane
 		HBox quant = new HBox(quantityMultiplier, submit);
 		quant.setAlignment(Pos.CENTER_RIGHT);
@@ -141,6 +192,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
 
 		//WorldStep 'Step' Button
+
 		Button inputStep = new Button();
 		inputStep.setText("Step");
 		inputStep.setOnAction(event -> {
@@ -243,12 +295,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
 		//RunStats ChoiceBox
 		ChoiceBox<String> statOptions = new ChoiceBox<>();
-		statOptions.getItems().add("Craig");
-		statOptions.getItems().add("Tragic Critter");
-		statOptions.getItems().add("Algae");
-		statOptions.getItems().add("Algaephobic Critter");
-		//TODO implement automatic scanner that detects Critter classes in the assignment package
-		statOptions.setValue("Craig");
+		addCritterOptionsMenu(statOptions);
 
 		//RunStats Pane
 			HBox relevantCritter = new HBox(statsHeader, statOptions);
@@ -345,25 +392,34 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	public void drawSquare(GraphicsContext gc, double x, double y, double length){
 		gc.fillPolygon(new double[]{x, x+length, x+length, x},
 				new double[]{y, y, y+length, y+length}, 4);
+		gc.strokePolygon(new double[]{x, x+length, x+length, x},
+				new double[]{y, y, y+length, y+length}, 4);
 	}
 
 	public void drawCircle(GraphicsContext gc, double x, double y, double diameter){
 		gc.fillOval(x, y, diameter, diameter);
+		gc.strokeOval(x, y, diameter, diameter);
 	}
 
 	public void drawTriangle(GraphicsContext gc, double x, double y, double length){
 		gc.fillPolygon(new double[]{x, x+length/2, x+length},
+				new double[]{y+length, y, y+length}, 3);
+		gc.strokePolygon(new double[]{x, x+length/2, x+length},
 				new double[]{y+length, y, y+length}, 3);
 	}
 
 	public void drawDiamond(GraphicsContext gc, double x, double y, double length){
 		gc.fillPolygon(new double[]{x, x+length/2, x+length, x+length/2},
 				new double[]{y+length/2, y+length, y+length/2, y}, 4);
+		gc.strokePolygon(new double[]{x, x+length/2, x+length, x+length/2},
+				new double[]{y+length/2, y+length, y+length/2, y}, 4);
 	}
 
 	public void drawStar(GraphicsContext gc, double x, double y, double length){ //TODO make not cancerous
 		drawTriangle(gc, x+5, y-5, length-10);
 		gc.fillPolygon(new double[]{x+5, x+5+(length-10)/2, x+length-5},
+				new double[]{y, y+length-10, y}, 3);
+		gc.strokePolygon(new double[]{x+5, x+5+(length-10)/2, x+length-5},
 				new double[]{y, y+length-10, y}, 3);
 	}
 
@@ -396,8 +452,8 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 			x_offset += (cell_width-cell_height)/2;
 		}
 
-		gc.setFill(critter.viewFillColor());
 		gc.setStroke(critter.viewOutlineColor());
+		gc.setFill(critter.viewFillColor());
 
 		switch (critter.viewShape()){
 			case CIRCLE: 	drawCircle(gc, x_offset + cell_x*cell_width, y_offset + cell_y*cell_height, length-padding);
