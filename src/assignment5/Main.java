@@ -1,23 +1,45 @@
 package assignment5;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.application.Application;
-import javafx.scene.control.Button;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 public class Main extends Application implements EventHandler<ActionEvent>{
 
-	private int stepInput = 0;
+	private int stepInput = 1;
+	private int quantityInput = 1;
+	private String lastSeed = "~~~~~~~~~~~~~";
+	private int stepsPerFrame;
+
 	public static void main(String[] args) {
+		System.out.println(Arrays.toString(GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()));
 		launch(args);
 	}
 
@@ -25,39 +47,277 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	public void start(Stage primaryStage) throws Exception{
 		primaryStage.setTitle("Critter World");
 
-		Button singleStep = new Button();
-		singleStep.setText("World Time Step(s)");
-		singleStep.setOnAction(event -> {
-            for(int i = 0; i < stepInput; i++) {
-				Critter.worldTimeStep();
-			}
+
+		//CritterQuantity Pane Title
+		Label quantityStepTitle = new Label("Critter Population Settings");
+
+
+		//CritterQuantity 'Add' Button
+		Button sizeStep = new Button();
+		sizeStep.setText("Add");
+		sizeStep.setOnAction(event -> {
+            //TODO add specified Critters to World
+        });
+		Label currentQuantityInput = new Label("Current Quantity: " + quantityInput + " Critters");
+
+		//CritterQuantity Slider
+		Slider quantityMultiplier = new Slider();
+		quantityMultiplier.setMin(0);
+		quantityMultiplier.setMax(100);
+		quantityMultiplier.setValue(1);
+		quantityMultiplier.setShowTickLabels(true);
+		quantityMultiplier.setShowTickLabels(true);
+		quantityMultiplier.valueProperty().addListener((observable, oldValue, newValue) -> {
+            quantityInput = (int)quantityMultiplier.getValue();
+            currentQuantityInput.setText("Current Interval: " + quantityInput + " Critters");
         });
 
-
-
-		Label label1 = new Label("Desired Steps: ");
-		TextField textField = new TextField ();
-		HBox hb = new HBox();
-		Button submit = new Button("Submit");
-		hb.getChildren().addAll(label1, textField, submit, singleStep);
-		hb.setSpacing(10);
+		//CritterQuantity Slider
+		Button submit = new Button("Custom");
 		submit.setOnAction(event -> {
-			int[] input = textField.getCharacters().codePoints().toArray();
-			//TODO check for invalid input
-			int total = 0;
-			for (int i = 0; i < input.length; i++) {
-				input[i] -= 48;
-				total *= 10;
-				total += input[i];
+			long newInput = inputAlert("Input", "Set your desired custom interval range 1-1000");
+			if(newInput > 1000) {
+				displayAlert("Error", "Error: Invalid Input. Critter Interval Unchanged.");
+			} else {
+				quantityInput = (int)newInput;
+				currentQuantityInput.setText("Current Interval: " + quantityInput + " Steps");
 			}
-			//TODO check for excessive worldStep count
-			stepInput = total;
 		});
 
-		StackPane layout = new StackPane();
-		layout.getChildren().addAll(hb);
+		//CritterQuantity ChoiceBox
+		ChoiceBox<String> critterTypes = new ChoiceBox<String>();
+		critterTypes.getItems().add("Craig");
+		critterTypes.getItems().add("Tragic Critter");
+		critterTypes.getItems().add("Algae");
+		critterTypes.getItems().add("Algaephobic Critter");
+		//TODO implement automatic scanner that detects Critter classes in the assignment package
+		critterTypes.setValue("Craig");
 
-		Scene scene = new Scene(layout, 500, 250);
+		//Quantity Pane
+			HBox quant = new HBox(quantityMultiplier, submit);
+			quant.setAlignment(Pos.CENTER_RIGHT);
+			quant.setSpacing(15);
+
+			HBox quantz = new HBox(currentQuantityInput, sizeStep);
+			quantz.setAlignment(Pos.CENTER_RIGHT);
+			quantz.setSpacing(25);
+
+			VBox quantities = new VBox(quantityStepTitle, critterTypes, quant, quantz);
+
+			quantities.setSpacing(15);
+			quantities.setBorder(new Border(new BorderStroke(Color.BLACK,
+					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+			quantities.setAlignment(Pos.CENTER);
+			quantities.setPadding(new Insets(15, 5, 15, 5));
+
+
+
+
+
+		//WorldStep Pane Title
+		Label timeStepTitle = new Label("Time-Step Settings");
+
+
+		//WorldStep 'Step' Button
+		Button inputStep = new Button();
+		inputStep.setText("Step");
+		inputStep.setOnAction(event -> {
+			for(int i = 0; i < stepInput; i++) {
+				Critter.worldTimeStep();
+			}
+		});
+		Label currentStepInput = new Label("Current Interval: " + stepInput + " Steps");
+
+		//WorldStep Multiplier Slider
+		Slider stepMultiplier = new Slider(0, 100, 1);
+		stepMultiplier.setShowTickLabels(true);
+		stepMultiplier.setShowTickMarks(true);
+		stepMultiplier.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				stepInput = (int)stepMultiplier.getValue();
+				currentStepInput.setText("Current Interval: " + stepInput + " Steps");
+			}
+		});
+
+		//WorldStep 'Custom' Button
+		Button custom = new Button("Custom");
+		custom.setOnAction(event -> {
+			long newInput = inputAlert("Input", "Set your desired custom interval range 1-1000");
+			if(newInput > 1000) {
+				displayAlert("Error", "Error: Invalid Input. World-Step Interval Unchanged.");
+			} else {
+				stepInput = (int)newInput;
+				currentStepInput.setText("Current Interval: " + stepInput + " Steps");
+			}
+		});
+
+		//TimeStep Panes
+			HBox steps = new HBox(stepMultiplier, custom);
+			steps.setAlignment(Pos.CENTER_RIGHT);
+			steps.setSpacing(15);
+
+			HBox stepz = new HBox(currentStepInput, inputStep);
+			stepz.setAlignment(Pos.CENTER_RIGHT);
+			stepz.setSpacing(25);
+
+			VBox stepping = new VBox(timeStepTitle, steps, stepz);
+			stepping.setSpacing(15);
+			stepping.setBorder(new Border(new BorderStroke(Color.BLACK,
+					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+			stepping.setAlignment(Pos.CENTER);
+			stepping.setPadding(new Insets(15, 5, 15, 5));
+
+		//Seed Pane Title
+		Label seedTitle = new Label("Seed Settings");
+
+		//Seed Button && CurrentSeed Label
+		TextField seed = new TextField();
+		Button setSeed = new Button("Set");
+		Label currentSeed = new Label("Current Seed:  ~~~~~~~~~~");
+		setSeed.setOnAction(event -> {
+			flag = false;
+			int[] submission = seed.getCharacters().chars().toArray();
+			long total = 0;
+			total = condense(submission);
+			if(!flag) {
+				Critter.setSeed(total);
+				lastSeed = Long.toString(total);
+				currentSeed.setText("Current Seed: " + lastSeed);
+			} else {
+				displayAlert("Error", "Error: Invalid Input. Seed Unchanged.");
+			}
+		});
+
+		//Seed Panes
+			HBox changeSeed = new HBox(seed, setSeed);
+			changeSeed.setAlignment(Pos.CENTER);
+			changeSeed.setSpacing(15);
+
+			VBox seedBox = new VBox(seedTitle, changeSeed, currentSeed);
+			seedBox.setSpacing(15);
+			seedBox.setAlignment(Pos.CENTER);
+			seedBox.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+			seedBox.setPadding(new Insets(15, 5, 15, 5));
+
+
+		//End Program Button
+		Button end = new Button("Close");
+		end.setOnAction(event -> System.exit(0));
+		end.setPadding(new Insets(15, 115, 15, 115));
+
+		//RunStats Pane Title
+		Label runStatsTitle = new Label("Critter Statistics");
+
+		//RunStats Text Box
+		TextArea stats = new TextArea();
+		stats.setMaxSize(265, 300);
+		stats.appendText("Testy Testicles");
+
+		//RunStats ChoiceBox Header
+		Label statsHeader = new Label("Critter: ");
+
+		//RunStats ChoiceBox
+		ChoiceBox<String> statOptions = new ChoiceBox<>();
+		statOptions.getItems().add("Craig");
+		statOptions.getItems().add("Tragic Critter");
+		statOptions.getItems().add("Algae");
+		statOptions.getItems().add("Algaephobic Critter");
+		//TODO implement automatic scanner that detects Critter classes in the assignment package
+		statOptions.setValue("Craig");
+
+		//RunStats Pane
+			HBox relevantCritter = new HBox(statsHeader, statOptions);
+			relevantCritter.setAlignment(Pos.CENTER);
+
+			VBox runStats = new VBox(runStatsTitle, relevantCritter, stats);
+			runStats.setAlignment(Pos.CENTER);
+			runStats.setSpacing(15);
+			runStats.setBorder(new Border(new BorderStroke(Color.BLACK,
+					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+			runStats.setAlignment(Pos.CENTER);
+			runStats.setPadding(new Insets(15, 5, 15, 5));
+
+		//Empty Spacing BOx
+		VBox nothin = new VBox();
+
+		//Right ControlPanel Pane
+		VBox rightPane = new VBox();
+		rightPane.getChildren().addAll(seedBox, quantities, stepping, runStats, end, nothin);
+		rightPane.setSpacing(5);
+		rightPane.setAlignment(Pos.CENTER);
+		rightPane.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+
+		//Animation 'Current'
+		Label currentSPF = new Label(Integer.toString(stepsPerFrame));
+
+		//Animation Steps/Frame Slider
+		Slider animationScale = new Slider(0,25,5);
+		animationScale.setShowTickMarks(true);
+		animationScale.setShowTickLabels(true);
+		stepsPerFrame = 5;
+		animationScale.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				stepsPerFrame = (int)animationScale.getValue();
+				currentSPF.setText(Integer.toString(stepsPerFrame));
+			}
+		});
+
+		//Animation 'Animate' Button
+		Button set = new Button("Start");
+		set.setOnAction(event -> {
+			for(int i = 0; i < stepInput; i++) {
+				if(i % stepsPerFrame == 0) {
+					Critter.displayWorld();
+					//TODO have displayWorld function here for the FX display
+				}
+			}
+		});
+
+		//Animation Pane Title
+		Label bottomTitle = new Label("Animation");
+
+		//Animation Control Pane
+		HBox bottomControl = new HBox(currentSPF, animationScale, set);
+		bottomControl.setMinHeight(50);
+		bottomControl.setSpacing(15);
+		bottomControl.setAlignment(Pos.CENTER);
+
+		//Bottom Animation Pane
+		VBox bottomPane = new VBox(bottomTitle, bottomControl);
+		bottomPane.setAlignment(Pos.CENTER);
+		bottomPane.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		bottomPane.setPadding(new Insets(15, 5, 15, 5));
+
+		//BottomBottomPane (for the sxe visuals)
+		VBox BottomBottomPane = new VBox(bottomPane);
+		BottomBottomPane.setPadding(new Insets(5, 5, 15, 5));
+		BottomBottomPane.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+		//Central Pane
+		//TODO this is your pane to work in
+		Pane center = new Pane();
+		center.setPadding(new Insets(5, 5, 5, 5));
+		center.setBorder(new Border((new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))));
+
+		//BorderPane
+		BorderPane border = new BorderPane();
+		border.setBottom(BottomBottomPane);
+		border.setRight(rightPane);
+		border.setCenter(center);
+		border.autosize();
+
+		//Setting the Scene
+		Scene scene = new Scene(border, 1500, 750);
+
+		//And Off we Go
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -65,5 +325,127 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	@Override
 	public void handle(ActionEvent event) {
 		System.out.println("Error- ActionEvent not Handled: " + event.getSource());
+	}
+
+	private void displayAlert(String title, String message) {
+		Stage window = new Stage();
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.setTitle(title);
+		window.setHeight(100);
+
+		Label errorMessage = new Label(message);
+		errorMessage.setPrefWidth(150 + message.length() * 5);
+		errorMessage.setAlignment(Pos.CENTER);
+		Button close = new Button("Okay");
+		close.setOnAction(event -> window.close());
+
+		window.setWidth(errorMessage.getPrefWidth());
+
+		VBox layout = new VBox();
+		layout.getChildren().addAll(errorMessage, close);
+		layout.setAlignment(Pos.CENTER);
+		layout.setSpacing(15);
+
+		Scene scene = new Scene(layout);
+		window.setScene(scene);
+		window.showAndWait();
+	}
+
+	private static boolean answer;
+	private boolean confirmAlert(String title, String message) {
+		Stage window = new Stage();
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.setTitle(title);
+		window.setHeight(100);
+
+		Label errorMessage = new Label(message);
+		errorMessage.setPrefWidth(150 + message.length() * 5);
+		errorMessage.setAlignment(Pos.CENTER);
+		window.setWidth(errorMessage.getPrefWidth());
+
+		Button yes = new Button("yes");
+		Button no =  new Button("no");
+
+		yes.setOnAction(event -> {
+			window.close();
+			answer = true;
+		});
+		no.setOnAction(event -> {
+			window.close();
+			answer = false;
+		});
+
+
+		HBox answers = new HBox(yes, no);
+		answers.setSpacing(15);
+		answers.setAlignment(Pos.CENTER);
+		VBox layout = new VBox();
+		layout.getChildren().addAll(errorMessage, answers);
+		layout.setAlignment(Pos.CENTER);
+		layout.setSpacing(15);
+
+		Scene scene = new Scene(layout);
+		window.setScene(scene);
+		window.showAndWait();
+
+		return answer;
+	}
+
+	private static long alertInput;
+	private boolean flag;
+	private long inputAlert(String title, String input) {
+		flag = false;
+
+		Stage window = new Stage();
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.setTitle(title);
+		window.setHeight(100);
+
+		Label errorMessage = new Label(input);
+		errorMessage.setPrefWidth(150 + input.length() * 5);
+		errorMessage.setAlignment(Pos.CENTER);
+		window.setWidth(errorMessage.getPrefWidth());
+
+		TextField alert = new TextField();
+		Button submit = new Button("Submit");
+
+		submit.setOnAction(event -> {
+			int[] inputs = alert.getCharacters().chars().toArray();
+			int total = condense(inputs);
+			if(!flag) {
+				alertInput = total;
+			} else {
+				alertInput = 100000000; 	//sets to be flagged later on
+			}
+			window.close();
+		});
+
+		HBox submission = new HBox(alert, submit);
+		submission.setSpacing(15);
+		submission.setAlignment(Pos.CENTER);
+		VBox layout = new VBox();
+		layout.getChildren().addAll(errorMessage, submission);
+		layout.setAlignment(Pos.CENTER);
+		layout.setSpacing(15);
+
+		Scene scene = new Scene(layout);
+		window.setScene(scene);
+		window.showAndWait();
+		return alertInput;
+	}
+
+	private int condense(int[] inputs) {
+		int total = 0;
+		flag = false;
+		for(int i = 0; i < inputs.length; i++) {
+			inputs[i] -= 48;
+			if(inputs[i] < 0 || inputs[i] > 9) {
+				flag = true;
+				break;
+			}
+			total *= 10;
+			total += inputs[i];
+		}
+		return total;
 	}
 }
