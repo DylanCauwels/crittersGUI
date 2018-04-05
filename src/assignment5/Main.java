@@ -36,6 +36,9 @@ import java.util.stream.IntStream;
 import java.util.ArrayList;
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.TimeUnit;
+import javafx.animation.*;
+import javafx.util.Duration;
 
 public class Main extends Application implements EventHandler<ActionEvent>{
 
@@ -86,14 +89,13 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		return classes;
 	}
 
-	public void addCritterOptionsMenu(ChoiceBox<String> box){
+	public ArrayList<String> getCritterOptionsMenu(){
+		ArrayList<String> items = new ArrayList<String>();
 		ArrayList<Class<Critter>> critters = getCritterClasses(this.getClass().getPackage());
 		for (Class<Critter> c:critters){
-			box.getItems().add(c.getSimpleName());
+			items.add(c.getSimpleName());
 		}
-		if(box.getItems().size()>0){
-			box.setValue(box.getItems().get(0));
-		}
+		return items;
 	}
 
 	public void addCritters(String critter_name, int num){
@@ -134,7 +136,10 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
 		//CritterQuantity ChoiceBox
 		ChoiceBox<String> critterTypes = new ChoiceBox<String>();
-		addCritterOptionsMenu(critterTypes);
+		critterTypes.getItems().addAll(getCritterOptionsMenu());
+		if(critterTypes.getItems().size()>0){
+			critterTypes.setValue(critterTypes.getItems().get(0));
+		}
 
 		//CritterQuantity 'Add' Button
 		Button sizeStep = new Button();
@@ -294,8 +299,11 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		Label statsHeader = new Label("Critter: ");
 
 		//RunStats ChoiceBox
-		ChoiceBox<String> statOptions = new ChoiceBox<>();
-		addCritterOptionsMenu(statOptions);
+		ComboBox<String> statOptions = new ComboBox<>();
+		statOptions.getItems().addAll(getCritterOptionsMenu());
+		if(statOptions.getItems().size()>0){
+			statOptions.setValue(statOptions.getItems().get(0));
+		}
 
 		//RunStats Pane
 			HBox relevantCritter = new HBox(statsHeader, statOptions);
@@ -328,7 +336,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		Slider animationScale = new Slider(0,25,5);
 		animationScale.setShowTickMarks(true);
 		animationScale.setShowTickLabels(true);
-		stepsPerFrame = 5;
+		stepsPerFrame = 10;
 		animationScale.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -337,15 +345,35 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 			}
 		});
 
+		Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				for(int i = 0; i < stepsPerFrame; i++) {
+					Critter.worldTimeStep();
+				}
+				displayWorld(canvas);
+			}
+		}));
+
+		fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+		fiveSecondsWonder.play();
+
 		//Animation 'Animate' Button
 		Button set = new Button("Start");
 		set.setOnAction(event -> {
 			for(int i = 0; i < stepInput; i++) {
-				if(i % stepsPerFrame == 0) {
-//					displayWorld();
+				Critter.worldTimeStep();
+				displayWorld(canvas);
+//				canvas.f
+//				if(i % stepsPerFrame == 0) {
+////					displayWorld();
+//
+//
+////					TimeUnit.SECONDS.sleep(5);
+//					//TODO have displayWorld function here for the FX display
+//				}
 
-					//TODO have displayWorld function here for the FX display
-				}
 			}
 		});
 
@@ -416,23 +444,22 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	}
 
 	public void drawStar(GraphicsContext gc, double x, double y, double length){ //TODO make not cancerous
-		drawTriangle(gc, x+5, y-5, length-10);
-		gc.fillPolygon(new double[]{x+5, x+5+(length-10)/2, x+length-5},
-				new double[]{y, y+length-10, y}, 3);
-		gc.strokePolygon(new double[]{x+5, x+5+(length-10)/2, x+length-5},
-				new double[]{y, y+length-10, y}, 3);
+		double xpoints[] = {x, x+0.375*length, x+0.5*length, x+0.625*length, x+length, x+0.75*length,
+				x+0.8*length, x+0.5*length, x+0.2*length, x+0.25*length};
+		double ypoints[] = {y+0.375*length, y+0.325*length, y, y+0.325*length, y+0.375*length, y+0.575*length,
+				y+0.9*length, y+0.7*length, y+0.9*length, y+0.575*length};
+		gc.fillPolygon(xpoints, ypoints, xpoints.length);
+		gc.strokePolygon(xpoints, ypoints, xpoints.length);
 	}
 
 	public void drawGrid(Canvas canvas, double cell_width, double cell_height){
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
 		// vertical lines
-		gc.setStroke(Color.BLUE);
+		gc.setStroke(Color.BLACK);
 		for(int i = 0 ; i < Params.world_width; i++){
 			gc.strokeLine(cell_width*i, 0, cell_width*i, canvas.getHeight());
 		}
-		// horizontal lines
-		gc.setStroke(Color.RED);
 		for(int i = 0 ; i < Params.world_height; i++){
 			gc.strokeLine(0, cell_height*i, canvas.getWidth(), cell_height*i);
 		}

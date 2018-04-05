@@ -4,7 +4,6 @@
     <list default="true" id="72bd2ddc-519c-49d4-abe7-0e2e4b738148" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main$3.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assignment5/Algae.java" afterPath="$PROJECT_DIR$/src/assignment5/Algae.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assignment5/Main.java" afterPath="$PROJECT_DIR$/src/assignment5/Main.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -20,20 +19,50 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/assignment5/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-176">
-              <caret line="417" column="79" lean-forward="false" selection-start-line="417" selection-start-column="79" selection-end-line="417" selection-end-column="79" />
+            <state relative-caret-position="247">
+              <caret line="350" column="44" lean-forward="false" selection-start-line="350" selection-start-column="44" selection-end-line="350" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1649#1665#0" expanded="true" />
-                <element signature="e#4103#4111#0" expanded="true" />
+                <element signature="e#1743#1759#0" expanded="true" />
+                <element signature="e#4174#4182#0" expanded="true" />
                 <element signature="method#drawSquare#0;class#Main#0" expanded="false" />
                 <element signature="method#drawCircle#0;class#Main#0" expanded="false" />
                 <element signature="method#drawTriangle#0;class#Main#0" expanded="false" />
                 <element signature="method#drawDiamond#0;class#Main#0" expanded="false" />
-                <element signature="method#drawStar#0;class#Main#0" expanded="false" />
-                <element signature="e#16475#16476#0" expanded="true" />
-                <element signature="e#16556#16557#0" expanded="true" />
+                <element signature="e#17405#17406#0" expanded="true" />
+                <element signature="e#17486#17487#0" expanded="true" />
+                <marker date="1522966145084" expanded="true" signature="2770:3003" ph="{...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ComboBox.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/ComboBox.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-427">
+              <caret line="191" column="38" lean-forward="false" selection-start-line="191" selection-start-column="38" selection-end-line="191" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ComboBoxBase.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/ComboBoxBase.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="191">
+              <caret line="61" column="11" lean-forward="false" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Control.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/Control.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="191">
+              <caret line="390" column="46" lean-forward="false" selection-start-line="390" selection-start-column="41" selection-end-line="390" selection-end-column="46" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -66,16 +95,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="395">
               <caret line="53" column="96" lean-forward="false" selection-start-line="53" selection-start-column="96" selection-end-line="53" selection-end-column="96" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Params.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/assignment5/Params.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -163,6 +182,7 @@
       <find>getCritterClasses</find>
       <find>getCr</find>
       <find>stats</find>
+      <find>items</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -374,12 +394,12 @@
       <option name="presentableId" value="Default" />
       <updated>1522861060149</updated>
       <workItem from="1522861063424" duration="29694000" />
-      <workItem from="1522940233131" duration="13786000" />
+      <workItem from="1522940233131" duration="19174000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43480000" />
+    <option name="totallyTimeSpent" value="48868000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="1028" extended-state="0" />
@@ -405,7 +425,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39893618" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25638297" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -429,7 +449,7 @@
           <properties />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="20" />
+      <option name="time" value="26" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -449,15 +469,15 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1649#1665#0" expanded="true" />
-            <element signature="e#4103#4111#0" expanded="true" />
+            <element signature="e#1743#1759#0" expanded="true" />
+            <element signature="e#4174#4182#0" expanded="true" />
             <element signature="method#drawSquare#0;class#Main#0" expanded="false" />
             <element signature="method#drawCircle#0;class#Main#0" expanded="false" />
             <element signature="method#drawTriangle#0;class#Main#0" expanded="false" />
             <element signature="method#drawDiamond#0;class#Main#0" expanded="false" />
-            <element signature="method#drawStar#0;class#Main#0" expanded="false" />
-            <element signature="e#16475#16476#0" expanded="true" />
-            <element signature="e#16556#16557#0" expanded="true" />
+            <element signature="e#17405#17406#0" expanded="true" />
+            <element signature="e#17486#17487#0" expanded="true" />
+            <marker date="1522966145084" expanded="true" signature="2770:3003" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -675,21 +695,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/Control.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="390" column="46" lean-forward="false" selection-start-line="390" selection-start-column="41" selection-end-line="390" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/ComboBoxBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="61" column="11" lean-forward="false" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/ComboBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-427">
+          <caret line="191" column="38" lean-forward="false" selection-start-line="191" selection-start-column="38" selection-end-line="191" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment5/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-176">
-          <caret line="417" column="79" lean-forward="false" selection-start-line="417" selection-start-column="79" selection-end-line="417" selection-end-column="79" />
+        <state relative-caret-position="247">
+          <caret line="350" column="44" lean-forward="false" selection-start-line="350" selection-start-column="44" selection-end-line="350" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1649#1665#0" expanded="true" />
-            <element signature="e#4103#4111#0" expanded="true" />
+            <element signature="e#1743#1759#0" expanded="true" />
+            <element signature="e#4174#4182#0" expanded="true" />
             <element signature="method#drawSquare#0;class#Main#0" expanded="false" />
             <element signature="method#drawCircle#0;class#Main#0" expanded="false" />
             <element signature="method#drawTriangle#0;class#Main#0" expanded="false" />
             <element signature="method#drawDiamond#0;class#Main#0" expanded="false" />
-            <element signature="method#drawStar#0;class#Main#0" expanded="false" />
-            <element signature="e#16475#16476#0" expanded="true" />
-            <element signature="e#16556#16557#0" expanded="true" />
+            <element signature="e#17405#17406#0" expanded="true" />
+            <element signature="e#17486#17487#0" expanded="true" />
+            <marker date="1522966145084" expanded="true" signature="2770:3003" ph="{...}" />
           </folding>
         </state>
       </provider>
