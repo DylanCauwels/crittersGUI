@@ -23,13 +23,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.*;
+import javafx.scene.paint.*;
+import javafx.scene.canvas.*;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
+import java.util.ArrayList;
 
 public class Main extends Application implements EventHandler<ActionEvent>{
 
@@ -43,9 +47,29 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		launch(args);
 	}
 
+
+
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		primaryStage.setTitle("Critter World");
+
+		//Central Pane
+		//TODO this is your pane to work in
+		Pane center = new Pane();
+		center.setPadding(new Insets(5, 5, 5, 5));
+		center.setBorder(new Border((new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))));
+
+		Canvas canvas = new Canvas((int)center.getWidth(),(int)center.getHeight());
+		center.getChildren().add(canvas);
+
+		canvas.widthProperty().bind(center.widthProperty());
+		canvas.heightProperty().bind(center.heightProperty());
+		// redraw when resized
+		canvas.widthProperty().addListener(event -> displayWorld(canvas));
+		canvas.heightProperty().addListener(event -> displayWorld(canvas));
+
+		displayWorld(canvas);
 
 
 		//CritterQuantity Pane Title
@@ -57,6 +81,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		sizeStep.setText("Add");
 		sizeStep.setOnAction(event -> {
             //TODO add specified Critters to World
+
         });
 		Label currentQuantityInput = new Label("Current Quantity: " + quantityInput + " Critters");
 
@@ -94,24 +119,21 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		critterTypes.setValue("Craig");
 
 		//Quantity Pane
-			HBox quant = new HBox(quantityMultiplier, submit);
-			quant.setAlignment(Pos.CENTER_RIGHT);
-			quant.setSpacing(15);
+		HBox quant = new HBox(quantityMultiplier, submit);
+		quant.setAlignment(Pos.CENTER_RIGHT);
+		quant.setSpacing(15);
 
-			HBox quantz = new HBox(currentQuantityInput, sizeStep);
-			quantz.setAlignment(Pos.CENTER_RIGHT);
-			quantz.setSpacing(25);
+		HBox quantz = new HBox(currentQuantityInput, sizeStep);
+		quantz.setAlignment(Pos.CENTER_RIGHT);
+		quantz.setSpacing(25);
 
-			VBox quantities = new VBox(quantityStepTitle, critterTypes, quant, quantz);
+		VBox quantities = new VBox(quantityStepTitle, critterTypes, quant, quantz);
 
-			quantities.setSpacing(15);
-			quantities.setBorder(new Border(new BorderStroke(Color.BLACK,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-			quantities.setAlignment(Pos.CENTER);
-			quantities.setPadding(new Insets(15, 5, 15, 5));
-
-
-
+		quantities.setSpacing(15);
+		quantities.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		quantities.setAlignment(Pos.CENTER);
+		quantities.setPadding(new Insets(15, 5, 15, 5));
 
 
 		//WorldStep Pane Title
@@ -124,6 +146,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		inputStep.setOnAction(event -> {
 			for(int i = 0; i < stepInput; i++) {
 				Critter.worldTimeStep();
+				displayWorld(canvas);
 			}
 		});
 		Label currentStepInput = new Label("Current Interval: " + stepInput + " Steps");
@@ -153,20 +176,20 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		});
 
 		//TimeStep Panes
-			HBox steps = new HBox(stepMultiplier, custom);
-			steps.setAlignment(Pos.CENTER_RIGHT);
-			steps.setSpacing(15);
+		HBox steps = new HBox(stepMultiplier, custom);
+		steps.setAlignment(Pos.CENTER_RIGHT);
+		steps.setSpacing(15);
 
-			HBox stepz = new HBox(currentStepInput, inputStep);
-			stepz.setAlignment(Pos.CENTER_RIGHT);
-			stepz.setSpacing(25);
+		HBox stepz = new HBox(currentStepInput, inputStep);
+		stepz.setAlignment(Pos.CENTER_RIGHT);
+		stepz.setSpacing(25);
 
-			VBox stepping = new VBox(timeStepTitle, steps, stepz);
-			stepping.setSpacing(15);
-			stepping.setBorder(new Border(new BorderStroke(Color.BLACK,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-			stepping.setAlignment(Pos.CENTER);
-			stepping.setPadding(new Insets(15, 5, 15, 5));
+		VBox stepping = new VBox(timeStepTitle, steps, stepz);
+		stepping.setSpacing(15);
+		stepping.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		stepping.setAlignment(Pos.CENTER);
+		stepping.setPadding(new Insets(15, 5, 15, 5));
 
 		//Seed Pane Title
 		Label seedTitle = new Label("Seed Settings");
@@ -190,16 +213,16 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		});
 
 		//Seed Panes
-			HBox changeSeed = new HBox(seed, setSeed);
-			changeSeed.setAlignment(Pos.CENTER);
-			changeSeed.setSpacing(15);
+		HBox changeSeed = new HBox(seed, setSeed);
+		changeSeed.setAlignment(Pos.CENTER);
+		changeSeed.setSpacing(15);
 
-			VBox seedBox = new VBox(seedTitle, changeSeed, currentSeed);
-			seedBox.setSpacing(15);
-			seedBox.setAlignment(Pos.CENTER);
-			seedBox.setBorder(new Border(new BorderStroke(Color.BLACK,
-				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-			seedBox.setPadding(new Insets(15, 5, 15, 5));
+		VBox seedBox = new VBox(seedTitle, changeSeed, currentSeed);
+		seedBox.setSpacing(15);
+		seedBox.setAlignment(Pos.CENTER);
+		seedBox.setBorder(new Border(new BorderStroke(Color.BLACK,
+			BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		seedBox.setPadding(new Insets(15, 5, 15, 5));
 
 
 		//End Program Button
@@ -272,7 +295,8 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		set.setOnAction(event -> {
 			for(int i = 0; i < stepInput; i++) {
 				if(i % stepsPerFrame == 0) {
-					Critter.displayWorld();
+//					displayWorld();
+
 					//TODO have displayWorld function here for the FX display
 				}
 			}
@@ -300,12 +324,8 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		BottomBottomPane.setBorder(new Border(new BorderStroke(Color.BLACK,
 				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-		//Central Pane
-		//TODO this is your pane to work in
-		Pane center = new Pane();
-		center.setPadding(new Insets(5, 5, 5, 5));
-		center.setBorder(new Border((new BorderStroke(Color.BLACK,
-				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))));
+
+
 
 		//BorderPane
 		BorderPane border = new BorderPane();
@@ -320,6 +340,111 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		//And Off we Go
 		primaryStage.setScene(scene);
 		primaryStage.show();
+	}
+
+//	private void draw(Canvas canvas) {
+//		int width = (int) canvas.getWidth();
+//		int height = (int) canvas.getHeight();
+//		GraphicsContext gc = canvas.getGraphicsContext2D();
+//		gc.clearRect(0, 0, width, height);
+//		gc.setStroke(Color.RED);
+//		gc.strokeLine(0, 0, width, height);
+//		gc.strokeLine(0, height, width, 0);
+//		gc.setFill(Color.BLUE);
+//		gc.fillOval(-30, -30, 60, 60);
+//		gc.fillOval(-30 + width, -30, 60, 60);
+//		gc.fillOval(-30, -30 + height, 60, 60);
+//		gc.fillOval(-30 + width, -30 + height, 60, 60);
+//	}
+
+	public void drawSquare(GraphicsContext gc, double x, double y, double length){
+		gc.fillPolygon(new double[]{x, x+length, x+length, x},
+				new double[]{y, y, y+length, y+length}, 4);
+	}
+
+	public void drawCircle(GraphicsContext gc, double x, double y, double diameter){
+		gc.fillOval(x, y, diameter, diameter);
+	}
+
+	public void drawTriangle(GraphicsContext gc, double x, double y, double length){
+		gc.fillPolygon(new double[]{x, x+length/2, x+length},
+				new double[]{y+length, y, y+length}, 3);
+	}
+
+	public void drawDiamond(GraphicsContext gc, double x, double y, double length){
+		gc.fillPolygon(new double[]{x, x+length/2, x+length, x+length/2},
+				new double[]{y+length/2, y+length, y+length/2, y}, 4);
+	}
+
+	public void drawStar(GraphicsContext gc, double x, double y, double length){
+		//TODO
+	}
+
+	public void drawGrid(Canvas canvas, double cell_width, double cell_height){
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
+		// vertical lines
+		gc.setStroke(Color.BLUE);
+		for(int i = 0 ; i < Params.world_width; i++){
+			gc.strokeLine(cell_width*i, 0, cell_width*i, canvas.getHeight());
+		}
+		// horizontal lines
+		gc.setStroke(Color.RED);
+		for(int i = 0 ; i < Params.world_height; i++){
+			gc.strokeLine(0, cell_height*i, canvas.getWidth(), cell_height*i);
+		}
+	}
+
+	public void drawCritter(Canvas canvas, Critter critter, int cell_x, int cell_y){
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		double cell_width = canvas.getWidth()/Params.world_width;
+		double cell_height = canvas.getHeight()/Params.world_width;
+
+		double length, padding = 5, x_offset = padding/2, y_offset = padding/2;
+		if(cell_width<cell_height){
+			length = cell_width;
+			y_offset += (cell_height-cell_width)/2;
+		}else{
+			length = cell_height;
+			x_offset += (cell_width-cell_height)/2;
+		}
+
+		gc.setFill(critter.viewFillColor());
+		gc.setStroke(critter.viewOutlineColor());
+
+		switch (critter.viewShape()){
+			case CIRCLE: 	drawCircle(gc, x_offset + cell_x*cell_width, y_offset + cell_y*cell_height, length-padding);
+						 	break;
+			case SQUARE: 	drawSquare(gc, x_offset + cell_x*cell_width, y_offset + cell_y*cell_height, length-padding);
+							break;
+			case TRIANGLE: 	drawTriangle(gc, x_offset + cell_x*cell_width, y_offset + cell_y*cell_height, length-padding);
+							break;
+			case DIAMOND: 	drawDiamond(gc, x_offset + cell_x*cell_width, y_offset + cell_y*cell_height, length-padding);
+							break;
+			case STAR:		drawStar(gc, x_offset + cell_x*cell_width, y_offset + cell_y*cell_height, length-padding);
+							break;
+		}
+	}
+
+	public void displayWorld(Canvas canvas){
+		ArrayList<Critter>[][] world = Critter.displayWorld();
+
+		int width = (int) canvas.getWidth();
+		int height = (int) canvas.getHeight();
+		double cell_width = canvas.getWidth()/Params.world_width;
+		double cell_height = canvas.getHeight()/Params.world_width;
+
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		drawGrid(canvas, cell_width, cell_height);
+
+		for(int i = 0; i < Params.world_width; i++) {
+			for(int j = 0; j < Params.world_height; j++) {
+				if(world[i][j]!=null && world[i][j].size()>0){
+					Critter critter = (Critter)world[i][j].get(0);
+					drawCritter(canvas, critter, i, j);
+				}
+			}
+		}
 	}
 
 	@Override

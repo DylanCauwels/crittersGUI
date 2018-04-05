@@ -446,31 +446,33 @@ public abstract class Critter {
 		/**
 		 * Prints out representation of world
 		 */
-		public static void displayWorld () {
-			System.out.print("+");
-			for (int i = 0; i < Params.world_width; i++) {
-				System.out.print("-");
-			}
-			System.out.print("+");
-			System.out.println();
-			for (int y = 0; y < Params.world_height; y++) {
-				System.out.print("|");
-				for (int x = 0; x < Params.world_width; x++) {
-					if (CritterWorld.world[x][y] != null && CritterWorld.world[x][y].size() > 0) {
-						System.out.print((Critter) CritterWorld.world[x][y].get(0));
-					} else {
-						System.out.print(" ");
-					}
-				}
-				System.out.print("|");
-				System.out.println();
-			}
-			System.out.print("+");
-			for (int i = 0; i < Params.world_width; i++) {
-				System.out.print("-");
-			}
-			System.out.print("+");
-			System.out.println();
+		public static ArrayList<Critter>[][] displayWorld () {
+
+			return CritterWorld.world;
+//			System.out.print("+");
+//			for (int i = 0; i < Params.world_width; i++) {
+//				System.out.print("-");
+//			}
+//			System.out.print("+");
+//			System.out.println();
+//			for (int y = 0; y < Params.world_height; y++) {
+//				System.out.print("|");
+//				for (int x = 0; x < Params.world_width; x++) {
+//					if (CritterWorld.world[x][y] != null && CritterWorld.world[x][y].size() > 0) {
+//						System.out.print((Critter) CritterWorld.world[x][y].get(0));
+//					} else {
+//						System.out.print(" ");
+//					}
+//				}
+//				System.out.print("|");
+//				System.out.println();
+//			}
+//			System.out.print("+");
+//			for (int i = 0; i < Params.world_width; i++) {
+//				System.out.print("-");
+//			}
+//			System.out.print("+");
+//			System.out.println();
 		}
 
 	/**
