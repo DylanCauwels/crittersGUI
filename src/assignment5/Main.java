@@ -113,7 +113,6 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		primaryStage.setTitle("Critter World");
 
 		//Central Pane
-		//TODO this is your pane to work in
 		Pane center = new Pane();
 		center.setPadding(new Insets(5, 5, 5, 5));
 		center.setBorder(new Border((new BorderStroke(Color.BLACK,
@@ -127,7 +126,6 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		// redraw when resized
 		canvas.widthProperty().addListener(event -> displayWorld(canvas));
 		canvas.heightProperty().addListener(event -> displayWorld(canvas));
-
 		displayWorld(canvas);
 
 
@@ -145,7 +143,6 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		Button sizeStep = new Button();
 		sizeStep.setText("Add");
 		sizeStep.setOnAction(event -> {
-            //TODO add specified Critters to World
 			addCritters(critterTypes.getValue(),quantityInput);
         });
 		Label currentQuantityInput = new Label("Current Quantity: " + quantityInput + " Critters");
@@ -174,7 +171,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 			}
 		});
 
-		//Quantity Pane
+		//CritterQuantity Pane
 		HBox quant = new HBox(quantityMultiplier, submit);
 		quant.setAlignment(Pos.CENTER_RIGHT);
 		quant.setSpacing(15);
@@ -192,11 +189,11 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		quantities.setPadding(new Insets(15, 5, 15, 5));
 
 
-		//WorldStep Pane Title
+		//TimeStep Pane Title
 		Label timeStepTitle = new Label("Time-Step Settings");
 
 
-		//WorldStep 'Step' Button
+		//TimeStep 'Step' Button
 
 		Button inputStep = new Button();
 		inputStep.setText("Step");
@@ -208,7 +205,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		});
 		Label currentStepInput = new Label("Current Interval: " + stepInput + " Steps");
 
-		//WorldStep Multiplier Slider
+		//TimeStep Multiplier Slider
 		Slider stepMultiplier = new Slider(0, 100, 1);
 		stepMultiplier.setShowTickLabels(true);
 		stepMultiplier.setShowTickMarks(true);
@@ -220,7 +217,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 			}
 		});
 
-		//WorldStep 'Custom' Button
+		//TimeStep 'Custom' Button
 		Button custom = new Button("Custom");
 		custom.setOnAction(event -> {
 			long newInput = inputAlert("Input", "Set your desired custom interval range 1-1000");
@@ -333,20 +330,22 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		Label currentSPF = new Label(Integer.toString(stepsPerFrame));
 
 		//Animation Steps/Frame Slider
-		Slider animationScale = new Slider(0,25,5);
+		Slider animationScale = new Slider(0,25,10);
 		animationScale.setShowTickMarks(true);
 		animationScale.setShowTickLabels(true);
 		stepsPerFrame = 10;
+		currentSPF.setText(Integer.toString(stepsPerFrame) + " Steps Per Frame");
+
 		animationScale.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				stepsPerFrame = (int)animationScale.getValue();
-				currentSPF.setText(Integer.toString(stepsPerFrame));
+				currentSPF.setText(Integer.toString(stepsPerFrame) + " Steps Per Frame");
 			}
 		});
 
+		//Animation Timeline
 		Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				for(int i = 0; i < stepsPerFrame; i++) {
@@ -355,33 +354,25 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 				displayWorld(canvas);
 			}
 		}));
-
 		fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
-		fiveSecondsWonder.play();
 
-		//Animation 'Animate' Button
+		//Animation 'Start' Button
 		Button set = new Button("Start");
 		set.setOnAction(event -> {
-			for(int i = 0; i < stepInput; i++) {
-				Critter.worldTimeStep();
-				displayWorld(canvas);
-//				canvas.f
-//				if(i % stepsPerFrame == 0) {
-////					displayWorld();
-//
-//
-////					TimeUnit.SECONDS.sleep(5);
-//					//TODO have displayWorld function here for the FX display
-//				}
+			fiveSecondsWonder.play();
+		});
 
-			}
+		//Animation 'Stop' Button
+		Button stop = new Button("Stop");
+		stop.setOnAction(event -> {
+			fiveSecondsWonder.stop();
 		});
 
 		//Animation Pane Title
 		Label bottomTitle = new Label("Animation");
 
 		//Animation Control Pane
-		HBox bottomControl = new HBox(currentSPF, animationScale, set);
+		HBox bottomControl = new HBox(currentSPF, animationScale, set, stop);
 		bottomControl.setMinHeight(50);
 		bottomControl.setSpacing(15);
 		bottomControl.setAlignment(Pos.CENTER);
@@ -399,9 +390,6 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		BottomBottomPane.setBorder(new Border(new BorderStroke(Color.BLACK,
 				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-
-
-
 		//BorderPane
 		BorderPane border = new BorderPane();
 		border.setBottom(BottomBottomPane);
@@ -414,6 +402,8 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 
 		//And Off we Go
 		primaryStage.setScene(scene);
+		primaryStage.setMinHeight(780);
+		primaryStage.setMinWidth(450);
 		primaryStage.show();
 	}
 
