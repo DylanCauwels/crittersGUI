@@ -1,5 +1,7 @@
 package assignment5;
 
+import javafx.scene.paint.Color;
+
 /**
  * Critter 4 is the Snake Class. Snakes reproduce once every year or so in the wild, so this is simulated by the snake
  * reproducing once in every 9 turns. If they don't reproduce, they slither quickly onward in search of additional food.
@@ -43,8 +45,8 @@ public class Critter4 extends Critter {
 	}
 
 	@Override
-	public CritterShape viewShape() { return CritterShape.SQUARE;}
+	public CritterShape viewShape() { return CritterShape.DIAMOND;}
 
 	@Override
-	public javafx.scene.paint.Color viewOutlineColor() { return javafx.scene.paint.Color.BLUE; }
+	public javafx.scene.paint.Color viewOutlineColor() { return Color.CRIMSON; }
 }

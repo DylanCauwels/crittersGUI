@@ -1,5 +1,7 @@
 package assignment5;
 
+import javafx.scene.paint.Color;
+
 /**
  * Critter2 is the Elephant Class. Elephants are a large generally peaceful type of animal that finds strength in its
  * size and its numbers. They reproduce rarely and only fight when provoked. They almost never fight other Elephants.
@@ -16,7 +18,10 @@ public class Critter2 extends Critter{
         if(getEnergy() > 200)
             reproduce(new Critter2(), getRandomInt(7));
         else {
-            walk(getRandomInt(7));
+            int choice = getRandomInt(7);
+            if(look(choice, false) == null) {
+                walk(choice);
+            }
         }
     }
 
@@ -46,8 +51,8 @@ public class Critter2 extends Critter{
     }
 
     @Override
-    public CritterShape viewShape() { return CritterShape.SQUARE;}
+    public CritterShape viewShape() { return CritterShape.STAR;}
 
     @Override
-    public javafx.scene.paint.Color viewOutlineColor() { return javafx.scene.paint.Color.BLUE; }
+    public javafx.scene.paint.Color viewOutlineColor() { return Color.AZURE; }
 }

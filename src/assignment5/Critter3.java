@@ -1,5 +1,7 @@
 package assignment5;
 
+import javafx.scene.paint.Color;
+
 /**
  * Critter 3 is the Stick-Bug Class. Stick-Bugs are a small bug that disguise themselves as sticks to hide from predators.
  * They will constantly reproduce as they find strength in numbers and it takes them very little energy to reproduce. When
@@ -48,8 +50,8 @@ public class Critter3 extends Critter {
     }
 
     @Override
-    public CritterShape viewShape() { return CritterShape.SQUARE;}
+    public CritterShape viewShape() { return CritterShape.TRIANGLE;}
 
     @Override
-    public javafx.scene.paint.Color viewOutlineColor() { return javafx.scene.paint.Color.BLUE; }
+    public javafx.scene.paint.Color viewOutlineColor() { return Color.CORAL; }
 }

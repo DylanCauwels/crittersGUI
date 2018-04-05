@@ -79,7 +79,21 @@ public abstract class Critter {
 	 process them (any sequence of fight() actions is fine – this is the same requirement as
 	 Part 1). A critter can look as often as it wishes in a time step
 	 */
-	protected final String look(int direction, boolean steps) {return "";}
+	protected final String look(int direction, boolean steps) {
+		Critter test = new Craig();
+		test.x_coord = this.x_coord;
+		test.y_coord = this.y_coord;
+		if(steps) {
+			calcCoord(test, direction, 2);
+		} else {
+			calcCoord(test, direction, 1);
+		}
+		if(CritterWorld.hasCritter(test.x_coord, test.y_coord)) {
+			return CritterWorld.hasCrittertoString(test.x_coord, test.y_coord);
+		} else {
+			return null;
+		}
+	}
 
 	//TODO end of change
 
@@ -576,6 +590,14 @@ public abstract class Critter {
 				world[a.x_coord][a.y_coord] = new ArrayList<Critter>();
 			}
 			world[a.x_coord][a.y_coord].add(a);
+		}
+
+		static boolean hasCritter(int x, int y) {
+			return world[x][y].size() > 0;
+		}
+
+		static String hasCrittertoString(int x, int y) {
+			return world[x][y].get(0).toString();
 		}
 	}
 }

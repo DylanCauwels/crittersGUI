@@ -1,5 +1,7 @@
 package assignment5;
 
+import javafx.scene.paint.Color;
+
 /**
  * Critter 1 is the Rabbit Class. Rabbits are small, nimble animals that escape predators by running away and being very
  * hard to catch. They reproduce whenever possible and never fight.
@@ -28,8 +30,13 @@ public class Critter1 extends Critter{
      */
     @Override
     public boolean fight(String opponent) {
-        run(getRandomInt(7));
-        return false;
+        int choice = getRandomInt(7);
+        if(look(choice, true) == null) {
+            run(choice);
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -41,8 +48,8 @@ public class Critter1 extends Critter{
     }
 
     @Override
-    public CritterShape viewShape() { return CritterShape.SQUARE;}
+    public CritterShape viewShape() { return CritterShape.CIRCLE;}
 
     @Override
-    public javafx.scene.paint.Color viewOutlineColor() { return javafx.scene.paint.Color.BLUE; }
+    public javafx.scene.paint.Color viewOutlineColor() { return Color.ANTIQUEWHITE; }
 }
