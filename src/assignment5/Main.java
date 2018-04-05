@@ -342,21 +342,6 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		primaryStage.show();
 	}
 
-//	private void draw(Canvas canvas) {
-//		int width = (int) canvas.getWidth();
-//		int height = (int) canvas.getHeight();
-//		GraphicsContext gc = canvas.getGraphicsContext2D();
-//		gc.clearRect(0, 0, width, height);
-//		gc.setStroke(Color.RED);
-//		gc.strokeLine(0, 0, width, height);
-//		gc.strokeLine(0, height, width, 0);
-//		gc.setFill(Color.BLUE);
-//		gc.fillOval(-30, -30, 60, 60);
-//		gc.fillOval(-30 + width, -30, 60, 60);
-//		gc.fillOval(-30, -30 + height, 60, 60);
-//		gc.fillOval(-30 + width, -30 + height, 60, 60);
-//	}
-
 	public void drawSquare(GraphicsContext gc, double x, double y, double length){
 		gc.fillPolygon(new double[]{x, x+length, x+length, x},
 				new double[]{y, y, y+length, y+length}, 4);
@@ -376,8 +361,10 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 				new double[]{y+length/2, y+length, y+length/2, y}, 4);
 	}
 
-	public void drawStar(GraphicsContext gc, double x, double y, double length){
-		//TODO
+	public void drawStar(GraphicsContext gc, double x, double y, double length){ //TODO make not cancerous
+		drawTriangle(gc, x+5, y-5, length-10);
+		gc.fillPolygon(new double[]{x+5, x+5+(length-10)/2, x+length-5},
+				new double[]{y, y+length-10, y}, 3);
 	}
 
 	public void drawGrid(Canvas canvas, double cell_width, double cell_height){

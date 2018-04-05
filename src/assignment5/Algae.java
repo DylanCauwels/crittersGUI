@@ -18,6 +18,6 @@ public class Algae extends TestCritter {
 		setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
 	}
 	
-	public CritterShape viewShape() { return CritterShape.CIRCLE; }
+	public CritterShape viewShape() { return CritterShape.STAR; }
 	public javafx.scene.paint.Color viewColor() { return javafx.scene.paint.Color.GREEN; }
 }

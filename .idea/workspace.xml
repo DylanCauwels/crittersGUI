@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72bd2ddc-519c-49d4-abe7-0e2e4b738148" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Algae.class" afterPath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Algae.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main$3.class" afterPath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main.class" afterPath="$PROJECT_DIR$/out/production/crittersGUI/assignment5/Main.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assignment5/Critter.java" afterPath="$PROJECT_DIR$/src/assignment5/Critter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assignment5/Algae.java" afterPath="$PROJECT_DIR$/src/assignment5/Algae.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assignment5/Main.java" afterPath="$PROJECT_DIR$/src/assignment5/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assignment5/Params.java" afterPath="$PROJECT_DIR$/src/assignment5/Params.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,19 +22,14 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/assignment5/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="370" column="50" lean-forward="false" selection-start-line="370" selection-start-column="50" selection-end-line="370" selection-end-column="50" />
+            <state relative-caret-position="-135">
+              <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
               <folding>
-                <element signature="e#5244#5524#0" expanded="true" />
-                <element signature="e#5523#5524#0" expanded="true" />
-                <element signature="e#9608#9874#0" expanded="true" />
-                <element signature="e#9873#9874#0" expanded="true" />
                 <element signature="method#drawSquare#0;class#Main#0" expanded="false" />
                 <element signature="method#drawCircle#0;class#Main#0" expanded="false" />
                 <element signature="method#drawDiamond#0;class#Main#0" expanded="false" />
-                <element signature="e#15200#15201#0" expanded="true" />
-                <element signature="e#15281#15282#0" expanded="true" />
-                <marker date="1522953815823" expanded="true" signature="12676:12689" ph="{...}" />
+                <element signature="e#14832#14833#0" expanded="true" />
+                <element signature="e#14913#14914#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -42,8 +38,8 @@
       <file leaf-file-name="Algae.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment5/Algae.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="20" column="64" lean-forward="false" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="64" />
+            <state relative-caret-position="315">
+              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -173,8 +169,8 @@
         <option value="$PROJECT_DIR$/src/assignment5/Critter4.java" />
         <option value="$PROJECT_DIR$/src/assignment5/Critter.java" />
         <option value="$PROJECT_DIR$/src/assignment5/Params.java" />
-        <option value="$PROJECT_DIR$/src/assignment5/Main.java" />
         <option value="$PROJECT_DIR$/src/assignment5/Algae.java" />
+        <option value="$PROJECT_DIR$/src/assignment5/Main.java" />
       </list>
     </option>
   </component>
@@ -362,12 +358,12 @@
       <option name="presentableId" value="Default" />
       <updated>1522861060149</updated>
       <workItem from="1522861063424" duration="29694000" />
-      <workItem from="1522940233131" duration="8285000" />
+      <workItem from="1522940233131" duration="9406000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37979000" />
+    <option name="totallyTimeSpent" value="39100000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="1028" extended-state="0" />
@@ -382,7 +378,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12978724" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12978724" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -393,7 +389,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39893618" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39893618" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -417,7 +413,7 @@
           <properties />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="10" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -436,16 +432,11 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5244#5524#0" expanded="true" />
-            <element signature="e#5523#5524#0" expanded="true" />
-            <element signature="e#9608#9874#0" expanded="true" />
-            <element signature="e#9873#9874#0" expanded="true" />
             <element signature="method#drawSquare#0;class#Main#0" expanded="false" />
             <element signature="method#drawCircle#0;class#Main#0" expanded="false" />
             <element signature="method#drawDiamond#0;class#Main#0" expanded="false" />
-            <element signature="e#15200#15201#0" expanded="true" />
-            <element signature="e#15281#15282#0" expanded="true" />
-            <marker date="1522953815823" expanded="true" signature="12676:12689" ph="{...}" />
+            <element signature="e#14832#14833#0" expanded="true" />
+            <element signature="e#14913#14914#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -657,27 +648,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment5/Algae.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="20" column="64" lean-forward="false" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="64" />
+        <state relative-caret-position="315">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment5/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="370" column="50" lean-forward="false" selection-start-line="370" selection-start-column="50" selection-end-line="370" selection-end-column="50" />
+        <state relative-caret-position="-135">
+          <caret line="73" column="0" lean-forward="true" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
           <folding>
-            <element signature="e#5244#5524#0" expanded="true" />
-            <element signature="e#5523#5524#0" expanded="true" />
-            <element signature="e#9608#9874#0" expanded="true" />
-            <element signature="e#9873#9874#0" expanded="true" />
             <element signature="method#drawSquare#0;class#Main#0" expanded="false" />
             <element signature="method#drawCircle#0;class#Main#0" expanded="false" />
             <element signature="method#drawDiamond#0;class#Main#0" expanded="false" />
-            <element signature="e#15200#15201#0" expanded="true" />
-            <element signature="e#15281#15282#0" expanded="true" />
-            <marker date="1522953815823" expanded="true" signature="12676:12689" ph="{...}" />
+            <element signature="e#14832#14833#0" expanded="true" />
+            <element signature="e#14913#14914#0" expanded="true" />
           </folding>
         </state>
       </provider>
