@@ -593,7 +593,11 @@ public abstract class Critter {
 		}
 
 		static boolean hasCritter(int x, int y) {
-			return world[x][y].size() > 0;
+			if(world[x][y]!=null){
+				return world[x][y].size() > 0;
+			}
+			return false;
+
 		}
 
 		static String hasCrittertoString(int x, int y) {

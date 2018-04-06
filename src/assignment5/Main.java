@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.*;
 import javafx.scene.paint.*;
 import javafx.scene.canvas.*;
+import javafx.collections.ObservableList;
 
 import javax.swing.*;
 import java.awt.GraphicsEnvironment;
@@ -39,6 +40,9 @@ import java.net.*;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.*;
 import javafx.util.Duration;
+import javafx.collections.*;
+import org.controlsfx.control.CheckListView;
+import java.lang.reflect.Method;
 
 public class Main extends Application implements EventHandler<ActionEvent>{
 
@@ -52,11 +56,16 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		launch(args);
 	}
 
+	/**
+	 * Go through directory and find all classes that instances of critter
+	 * @param pkg
+	 * @return
+	 */
 	public ArrayList<Class<Critter>> getCritterClasses(Package pkg){
 		ArrayList<Class<Critter>> classes = new ArrayList<Class<Critter>>();
 		String packagename = pkg.getName();
 		URL resource = ClassLoader.getSystemClassLoader().getResource(packagename);
-		String path = resource.getFile();
+		String path = resource.getFile(); //path to package
 		File directory;
 		try {
 			directory = new File(resource.toURI());
@@ -77,11 +86,11 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 								classes.add(classObj);
 							}
 						}catch(Exception e){
-							continue;
+							continue; //Skip if class cannot be made into object
 						}
 					}
 					catch (ClassNotFoundException e) {
-						throw new RuntimeException("ClassNotFoundException loading " + className);
+						return null;
 					}
 				}
 			}
@@ -89,6 +98,10 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		return classes;
 	}
 
+	/**
+	 * Go through classes and return array of names
+	 * @return
+	 */
 	public ArrayList<String> getCritterOptionsMenu(){
 		ArrayList<String> items = new ArrayList<String>();
 		ArrayList<Class<Critter>> critters = getCritterClasses(this.getClass().getPackage());
@@ -98,6 +111,11 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		return items;
 	}
 
+	/**
+	 * Add critters in world
+	 * @param critter_name
+	 * @param num
+	 */
 	public void addCritters(String critter_name, int num){
 		for(int i = 0; i<num; i++){
 			try{
@@ -108,6 +126,33 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		}
 	}
 
+	/**
+	 * Uses reflection and goes through checked items to call run stats and output to text area
+	 * @param checkview
+	 * @param stats
+	 */
+	public void displayStats(CheckListView<String> checkview, TextArea stats){
+		StringBuilder start = new StringBuilder();
+		for(String critter_name:checkview.getCheckModel().getCheckedItems()){
+			try {
+				Class classTemp = Class.forName(this.getClass().getPackage().getName() + "." + critter_name);
+				Method m = classTemp.getMethod("runStats", List.class); //Get method
+				List<Critter> instances = Critter.getInstances(critter_name);
+				String output = (String)m.invoke(null, instances); //Invoke with instances
+				start.append(output+"\n");
+			} catch (Exception e) {
+				return;
+			}
+		}
+		stats.clear();
+		stats.appendText(start.toString());
+	}
+
+	/**
+	 * Primary method handling all layout
+	 * @param primaryStage
+	 * @throws Exception
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		primaryStage.setTitle("Critter World");
@@ -118,16 +163,32 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		center.setBorder(new Border((new BorderStroke(Color.BLACK,
 				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))));
 
+		//Main canvas for critter game
 		Canvas canvas = new Canvas((int)center.getWidth(),(int)center.getHeight());
-		center.getChildren().add(canvas);
-
 		canvas.widthProperty().bind(center.widthProperty());
 		canvas.heightProperty().bind(center.heightProperty());
-		// redraw when resized
 		canvas.widthProperty().addListener(event -> displayWorld(canvas));
 		canvas.heightProperty().addListener(event -> displayWorld(canvas));
-		displayWorld(canvas);
 
+		center.getChildren().add(canvas); //Add canvas to center pane
+
+		//Initialize runstats components
+		ObservableList<String> strings = FXCollections.observableArrayList();
+		strings.addAll(getCritterOptionsMenu());
+		CheckListView<String> checkview = new CheckListView<String>(strings); //Run stats checkbox
+		checkview.setMaxHeight(100);
+		TextArea stats = new TextArea(); //Run stats Text Area
+		stats.setMaxWidth(265);
+
+		checkview.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+			public void onChanged(ListChangeListener.Change<? extends String> c) {
+				displayStats(checkview, stats); //Call run stats every time checkbox is selected
+			}
+		});
+
+		//Display world to start
+		displayWorld(canvas);
+		displayStats(checkview, stats);
 
 		//CritterQuantity Pane Title
 		Label quantityStepTitle = new Label("Critter Population Settings");
@@ -188,10 +249,8 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		quantities.setAlignment(Pos.CENTER);
 		quantities.setPadding(new Insets(15, 5, 15, 5));
 
-
 		//TimeStep Pane Title
 		Label timeStepTitle = new Label("Time-Step Settings");
-
 
 		//TimeStep 'Step' Button
 
@@ -201,6 +260,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 			for(int i = 0; i < stepInput; i++) {
 				Critter.worldTimeStep();
 				displayWorld(canvas);
+				displayStats(checkview, stats);
 			}
 		});
 		Label currentStepInput = new Label("Current Interval: " + stepInput + " Steps");
@@ -278,53 +338,22 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 			BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		seedBox.setPadding(new Insets(15, 5, 15, 5));
 
-
 		//End Program Button
 		Button end = new Button("Close");
 		end.setOnAction(event -> System.exit(0));
 		end.setPadding(new Insets(15, 115, 15, 115));
 
-		//RunStats Pane Title
-		Label runStatsTitle = new Label("Critter Statistics");
-
-		//RunStats Text Box
-		TextArea stats = new TextArea();
-		stats.setMaxSize(265, 300);
-		stats.appendText("Testy Testicles");
-
-		//RunStats ChoiceBox Header
-		Label statsHeader = new Label("Critter: ");
-
-		//RunStats ChoiceBox
-		ComboBox<String> statOptions = new ComboBox<>();
-		statOptions.getItems().addAll(getCritterOptionsMenu());
-		if(statOptions.getItems().size()>0){
-			statOptions.setValue(statOptions.getItems().get(0));
-		}
-
 		//RunStats Pane
-			HBox relevantCritter = new HBox(statsHeader, statOptions);
-			relevantCritter.setAlignment(Pos.CENTER);
+		HBox relevantCritter = new HBox(checkview);
+		relevantCritter.setAlignment(Pos.CENTER);
 
-			VBox runStats = new VBox(runStatsTitle, relevantCritter, stats);
-			runStats.setAlignment(Pos.CENTER);
-			runStats.setSpacing(15);
-			runStats.setBorder(new Border(new BorderStroke(Color.BLACK,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-			runStats.setAlignment(Pos.CENTER);
-			runStats.setPadding(new Insets(15, 5, 15, 5));
-
-		//Empty Spacing BOx
-		VBox nothin = new VBox();
-
-		//Right ControlPanel Pane
-		VBox rightPane = new VBox();
-		rightPane.getChildren().addAll(seedBox, quantities, stepping, runStats, end, nothin);
-		rightPane.setSpacing(5);
-		rightPane.setAlignment(Pos.CENTER);
-		rightPane.setBorder(new Border(new BorderStroke(Color.BLACK,
+		VBox runStats = new VBox(relevantCritter, stats);
+		runStats.setAlignment(Pos.CENTER);
+		runStats.setSpacing(15);
+		runStats.setBorder(new Border(new BorderStroke(Color.BLACK,
 				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
+		runStats.setAlignment(Pos.CENTER);
+		runStats.setPadding(new Insets(15, 5, 15, 5));
 
 		//Animation 'Current'
 		Label currentSPF = new Label(Integer.toString(stepsPerFrame));
@@ -335,6 +364,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		animationScale.setShowTickLabels(true);
 		stepsPerFrame = 10;
 		currentSPF.setText(Integer.toString(stepsPerFrame) + " Steps Per Frame");
+
 
 		animationScale.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -352,6 +382,7 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 					Critter.worldTimeStep();
 				}
 				displayWorld(canvas);
+				displayStats(checkview, stats);
 			}
 		}));
 		fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
@@ -360,25 +391,65 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		Button set = new Button("Start");
 		set.setOnAction(event -> {
 			fiveSecondsWonder.play();
+
+			seedBox.setDisable(true); //Disable all elements on start animation
+			seed.setDisable(true);
+			setSeed.setDisable(true);
+			stepMultiplier.setDisable(true);
+			submit.setDisable(true);
+			custom.setDisable(true);
+			inputStep.setDisable(true);
+			sizeStep.setDisable(true);
+			quantityMultiplier.setDisable(true);
+			checkview.setDisable(true);
+			animationScale.setDisable(true);
+			set.setDisable(true);
+			critterTypes.setDisable(true);
 		});
 
 		//Animation 'Stop' Button
 		Button stop = new Button("Stop");
 		stop.setOnAction(event -> {
 			fiveSecondsWonder.stop();
+
+			seedBox.setDisable(false); //Enable all elements
+			seed.setDisable(false);
+			setSeed.setDisable(false);
+			stepMultiplier.setDisable(false);
+			submit.setDisable(false);
+			custom.setDisable(false);
+			inputStep.setDisable(false);
+			sizeStep.setDisable(false);
+			quantityMultiplier.setDisable(false);
+			checkview.setDisable(false);
+			animationScale.setDisable(false);
+			set.setDisable(false);
+			critterTypes.setDisable(false);
+
 		});
 
 		//Animation Pane Title
 		Label bottomTitle = new Label("Animation");
 
+		//Empty Spacing BOx
+		VBox nothin = new VBox();
+
+		//Right ControlPanel Pane
+		VBox rightPane = new VBox();
+		rightPane.getChildren().addAll(seedBox,stepping, quantities, runStats,nothin);
+		rightPane.setSpacing(5);
+		rightPane.setAlignment(Pos.CENTER);
+		rightPane.setBorder(new Border(new BorderStroke(Color.BLACK,
+				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
 		//Animation Control Pane
-		HBox bottomControl = new HBox(currentSPF, animationScale, set, stop);
+		HBox bottomControl = new HBox( currentSPF, animationScale, set, stop, end);
 		bottomControl.setMinHeight(50);
 		bottomControl.setSpacing(15);
 		bottomControl.setAlignment(Pos.CENTER);
 
 		//Bottom Animation Pane
-		VBox bottomPane = new VBox(bottomTitle, bottomControl);
+		VBox bottomPane = new VBox(bottomControl);
 		bottomPane.setAlignment(Pos.CENTER);
 		bottomPane.setBorder(new Border(new BorderStroke(Color.BLACK,
 				BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -407,6 +478,13 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		primaryStage.show();
 	}
 
+	/**
+	 * Draws square shape
+	 * @param gc
+	 * @param x
+	 * @param y
+	 * @param length
+	 */
 	public void drawSquare(GraphicsContext gc, double x, double y, double length){
 		gc.fillPolygon(new double[]{x, x+length, x+length, x},
 				new double[]{y, y, y+length, y+length}, 4);
@@ -414,11 +492,25 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 				new double[]{y, y, y+length, y+length}, 4);
 	}
 
+	/**
+	 * Draws circle shape
+	 * @param gc
+	 * @param x
+	 * @param y
+	 * @param diameter
+	 */
 	public void drawCircle(GraphicsContext gc, double x, double y, double diameter){
 		gc.fillOval(x, y, diameter, diameter);
 		gc.strokeOval(x, y, diameter, diameter);
 	}
 
+	/**
+	 * Draws triangle shape
+	 * @param gc
+	 * @param x
+	 * @param y
+	 * @param length
+	 */
 	public void drawTriangle(GraphicsContext gc, double x, double y, double length){
 		gc.fillPolygon(new double[]{x, x+length/2, x+length},
 				new double[]{y+length, y, y+length}, 3);
@@ -426,6 +518,13 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 				new double[]{y+length, y, y+length}, 3);
 	}
 
+	/**
+	 * Draws diamond shape
+	 * @param gc
+	 * @param x
+	 * @param y
+	 * @param length
+	 */
 	public void drawDiamond(GraphicsContext gc, double x, double y, double length){
 		gc.fillPolygon(new double[]{x, x+length/2, x+length, x+length/2},
 				new double[]{y+length/2, y+length, y+length/2, y}, 4);
@@ -433,6 +532,13 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 				new double[]{y+length/2, y+length, y+length/2, y}, 4);
 	}
 
+	/**
+	 * Draws star shape
+	 * @param gc
+	 * @param x
+	 * @param y
+	 * @param length
+	 */
 	public void drawStar(GraphicsContext gc, double x, double y, double length){ //TODO make not cancerous
 		double xpoints[] = {x, x+0.375*length, x+0.5*length, x+0.625*length, x+length, x+0.75*length,
 				x+0.8*length, x+0.5*length, x+0.2*length, x+0.25*length};
@@ -442,6 +548,12 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		gc.strokePolygon(xpoints, ypoints, xpoints.length);
 	}
 
+	/**
+	 * Draws grid lines
+	 * @param canvas
+	 * @param cell_width
+	 * @param cell_height
+	 */
 	public void drawGrid(Canvas canvas, double cell_width, double cell_height){
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, canvas.getWidth(),canvas.getHeight());
@@ -455,12 +567,19 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		}
 	}
 
+	/**
+	 * Draws general critter
+	 * @param canvas
+	 * @param critter
+	 * @param cell_x
+	 * @param cell_y
+	 */
 	public void drawCritter(Canvas canvas, Critter critter, int cell_x, int cell_y){
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		double cell_width = canvas.getWidth()/Params.world_width;
 		double cell_height = canvas.getHeight()/Params.world_width;
 
-		double length, padding = 5, x_offset = padding/2, y_offset = padding/2;
+		double length, padding = cell_width/10, x_offset = padding/2, y_offset = padding/2;
 		if(cell_width<cell_height){
 			length = cell_width;
 			y_offset += (cell_height-cell_width)/2;
@@ -486,6 +605,10 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		}
 	}
 
+	/**
+	 * Goes through all critters and displays
+	 * @param canvas
+	 */
 	public void displayWorld(Canvas canvas){
 		ArrayList<Critter>[][] world = Critter.displayWorld();
 
@@ -512,6 +635,11 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		System.out.println("Error- ActionEvent not Handled: " + event.getSource());
 	}
 
+	/**
+	 * Display alert
+	 * @param title
+	 * @param message
+	 */
 	private void displayAlert(String title, String message) {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -537,6 +665,13 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 	}
 
 	private static boolean answer;
+
+	/**
+	 * Confirm alert
+	 * @param title
+	 * @param message
+	 * @return
+	 */
 	private boolean confirmAlert(String title, String message) {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -619,6 +754,11 @@ public class Main extends Application implements EventHandler<ActionEvent>{
 		return alertInput;
 	}
 
+	/**
+	 * Condense
+	 * @param inputs
+	 * @return
+	 */
 	private int condense(int[] inputs) {
 		int total = 0;
 		flag = false;
